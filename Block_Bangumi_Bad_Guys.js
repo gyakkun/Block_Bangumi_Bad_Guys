@@ -3,7 +3,7 @@
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
 // @license       MIT
-// @version       0.0.12
+// @version       0.0.13
 // @include       http://bangumi.tv/*
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
@@ -40,6 +40,7 @@
     var THREAD_URL = /\/(ep|blog|subject|group)/;
     var CATEGORY_URL = /\/(anime|book|music|real)/;
     var SETTINGS_URL = /^\/settings$/;
+    var GROUP_INDEX_URL = /^\/group$/;
 
     //Selectors
     var INDEX_TIMELINE_AVATAR_SELECTOR = "#timeline > ul > li > span > a > span";
@@ -48,12 +49,13 @@
     var THREAD_AVATAR_SELECTOR = "div[id^='post_'] > a.avatar ";
     var SUBJECT_BLOG_USERNAME_SELECTOR = "#entry_list > div > div > div.time > span > a";
     var SUBJECT_THREAD_USERNAME_SELECTOR = "#columnSubjectHomeB > div > table > tbody > tr > td > a";
-    var SUBJECT_DOING_USERNAME_SELECTOR = "#subjectPanelCollect > ul > li > div > a";
+    var SUBJECT_COLLECT_USERNAME_SELECTOR = "#subjectPanelCollect > ul > li > div > a";
     var SUBJECT_INDEX_USERNAME_SELECTOR = "#subjectPanelIndex > ul > li > a";
     var SUBJECT_RATING_USERNAME_SELECTOR = "#memberUserList > li > div > strong > a";
     var SUBJECT_COMMENT_DETAIL_PAGE_USERNAME_SELECTOR = "#comment_box > div > a";
     var CATEGORY_BLOG_USERNAME_SELECTOR = "#news_list > div > div > div.time > small.blue > a";
     var CATEGORY_THREAD_USERNAME_SELECTOR = "#columnA > div > table > tbody > tr > td > a";
+    var GROUP_INDEX_USERNAME_SELECTOR = "#columnA > table > tbody > tr > td > small.sub_title > a";
 
     //Regexes
     var USERNAME_REG = /user\/(.+)/;
@@ -78,7 +80,7 @@
             if ($.inArray(username, BLOCK_USERNAME_LIST) >= 0) {
                 obj.closest(selectorToRemove).hide();
                 console.warn(username + " was removed by username, " +
-                    "called by function " + RemoveByUsername.caller.name);
+                    "called by function " + RemoveByUsername.caller.name + ".");
                 return true;
             }
         } catch (err) {}
@@ -92,7 +94,7 @@
             if ($.inArray(userId, BLOCK_UID_LIST) >= 0) {
                 obj.closest(selectorToRemove).hide();
                 console.warn(userId + " was removed by uid." +
-                    "called by function " + RemoveByUid.caller.name);
+                    "called by function " + RemoveByUid.caller.name + ".");
                 return true;
             }
         } catch (err) {}
@@ -100,7 +102,7 @@
     };
 
     var OddEvenClassInnerHandler = function(obj, selector, oddClass, evenClass) {
-        console.warn("Odd/even class inner handled from function " + GetFinalCallerName(OddEvenClassInnerHandler));
+        console.warn("Odd/even class inner handled from function " + GetFinalCallerName(OddEvenClassInnerHandler) + ".");
         obj.find(selector).each(function() {
             if ($(this).hasClass(oddClass)) {
                 $(this).removeClass(oddClass);
@@ -115,8 +117,8 @@
 
     var OddOrEvenClassOuterHandler = function(obj, selector, OddOrEvenClass) {
         //This function only add/remove one class which is odd/even related.
-        console.warn("Odd/even class outer handled from function " + GetFinalCallerName(OddOrEvenClassOuterHandler));
-        obj.closest("selector").nextAll().each(function() {
+        console.warn("Odd/even class outer handled from function " + GetFinalCallerName(OddOrEvenClassOuterHandler) + ".");
+        obj.closest(selector).nextAll().each(function() {
             if ($(this).hasClass(OddOrEvenClass)) {
                 $(this).removeClass(OddOrEvenClass);
             } else {
@@ -203,6 +205,16 @@
         }
     };
 
+    var RemoveThreadFromGroupIndex = function() {
+        var that = $(this);
+        var isSuccess = RemoveByUsername(that, "tr");
+        if (isSuccess) {
+            that.closest("tr").nextAll().each(function() {
+                OddEvenClassInnerHandler($(this), "> td", "odd", "even");
+            });
+        }
+    };
+
 
     if (url.match(TIMELINE_URL) !== null || url.match(INDEX_URL) !== null) {
         $(INDEX_TIMELINE_AVATAR_SELECTOR).each(RemoveUidIndexTimeline);
@@ -210,11 +222,15 @@
         $(INDEX_THREAD_AVATAR_SELECTOR).each(RemoveUidIndexThread);
     }
 
+    if (url.match(GROUP_INDEX_URL) !== null) {
+        $(GROUP_INDEX_USERNAME_SELECTOR).each(RemoveThreadFromGroupIndex);
+    }
+
     if (url.match(THREAD_URL) !== null) {
         $(THREAD_AVATAR_SELECTOR).each(RemoveCommentFromThread);
         $(SUBJECT_BLOG_USERNAME_SELECTOR).each(RemoveBlogFromSubject);
         $(SUBJECT_THREAD_USERNAME_SELECTOR).each(RemoveThreadFromSubject);
-        $(SUBJECT_DOING_USERNAME_SELECTOR).each(RemoveDoingFromSubject);
+        $(SUBJECT_COLLECT_USERNAME_SELECTOR).each(RemoveDoingFromSubject);
         $(SUBJECT_INDEX_USERNAME_SELECTOR).each(RemoveIndexFromSubject);
         $(SUBJECT_RATING_USERNAME_SELECTOR).each(RemoveRatingFromSubject);
         $(SUBJECT_COMMENT_DETAIL_PAGE_USERNAME_SELECTOR).each(RemoveCommetFromSubjectCommentDetailPage);
