@@ -1,4 +1,4 @@
-//// ==UserScript==
+// ==UserScript==
 // @name          Block Bad Guys on Bangumi.tv (Alpha)
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
