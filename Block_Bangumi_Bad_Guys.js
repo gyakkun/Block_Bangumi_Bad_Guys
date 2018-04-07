@@ -3,7 +3,7 @@
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
 // @license       MIT
-// @version       0.0.9
+// @version       0.0.10
 // @include       http://bangumi.tv/*
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
