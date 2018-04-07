@@ -3,7 +3,7 @@
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
 // @license       MIT
-// @version       0.0.13
+// @version       0.1.0
 // @include       http://bangumi.tv/*
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
@@ -257,7 +257,7 @@
     }
 
     if (url.match(SETTINGS_URL) !== null) {
-        $("#columnA > form > span > table > tbody > tr:nth-last-child(2)").after('<tr><td valign="top" width="12%"><h2 class="subtitle">屏蔽列表</h2></td><td valign="top"></td></tr><tr><td valign="top" width="12%">Block UID List</td><td valign="top"><input id="buidl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr><tr><td valign="top" width="12%">Block Username List</td><td valign="top"><input id="busrnl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr>');
+        $("#columnA > form > span > table > tbody > tr:nth-last-child(2)").after('<tr><td valign="top" width="12%"><h2 class="subtitle">屏蔽列表</h2></td><td valign="top"></td></tr><tr><td valign="top" width="12%">注意</td><td valign="top">请填入需要屏蔽用户的用户名(username), 以逗号分隔, 如: laoism, acgism</br>用户名可以根据用户详情页url得到, 如https://bgm.tv/user/Example, 则该用户的的用户名为Example。</br>用户名也可在用户详情页头像旁的@xxxx处得到, xxxx即为用户名。</td></tr><tr style="display: none;"><td valign="top" width="12%">Block UID List</td><td valign="top"><input id="buidl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr><tr><td valign="top" width="12%">Block Username List</td><td valign="top"><input id="busrnl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr>');
         $("#buidl").attr("value", BLOCK_UID_LIST);
         $("#busrnl").attr("value", BLOCK_USERNAME_LIST);
         $("input[type='submit']").click(function() {
