@@ -54,6 +54,7 @@
     var SUBJECT_INDEX_DETAIL_PAGE_USERNAME_SELECTOR = "#timeline > ul > li > span.info.clearit > span > a";
     var SUBJECT_RATING_USERNAME_SELECTOR = "#memberUserList > li > div > strong > a";
     var SUBJECT_COMMENT_DETAIL_PAGE_USERNAME_SELECTOR = "#comment_box > div > a";
+    var CATEGORY_DOING_USERNAME_SELECTOR = "#columnA > div.section > div > ul.coversSmall > li > p > a";
     var CATEGORY_BLOG_USERNAME_SELECTOR = "#news_list > div > div > div.time > small.blue > a";
     var CATEGORY_THREAD_USERNAME_SELECTOR = "#columnA > div > table > tbody > tr > td > a";
     var GROUP_INDEX_USERNAME_SELECTOR = "#columnA > table > tbody > tr > td > small.sub_title > a";
@@ -201,6 +202,11 @@
         }
     };
 
+    var RemoveDoingFromCategory = function() {
+        var that = $(this);
+        RemoveByUsername(that, "li.clearit");
+    };
+
     var RemoveThreadFromCategory = function() {
         var that = $(this);
         var isSuccess = RemoveByUsername(that, "tr");
@@ -244,6 +250,7 @@
     }
 
     if (url.match(CATEGORY_URL) !== null) {
+        $(CATEGORY_DOING_USERNAME_SELECTOR).each(RemoveDoingFromCategory);
         $(CATEGORY_BLOG_USERNAME_SELECTOR).each(RemoveBlogFromCategory);
         $(CATEGORY_THREAD_USERNAME_SELECTOR).each(RemoveThreadFromCategory);
 
