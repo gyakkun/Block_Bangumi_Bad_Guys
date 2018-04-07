@@ -51,6 +51,7 @@
     var SUBJECT_THREAD_USERNAME_SELECTOR = "#columnSubjectHomeB > div > table > tbody > tr > td > a";
     var SUBJECT_COLLECT_USERNAME_SELECTOR = "#subjectPanelCollect > ul > li > div > a";
     var SUBJECT_INDEX_USERNAME_SELECTOR = "#subjectPanelIndex > ul > li > a";
+    var SUBJECT_INDEX_DETAIL_PAGE_USERNAME_SELECTOR = "#timeline > ul > li > span.info.clearit > span > a";
     var SUBJECT_RATING_USERNAME_SELECTOR = "#memberUserList > li > div > strong > a";
     var SUBJECT_COMMENT_DETAIL_PAGE_USERNAME_SELECTOR = "#comment_box > div > a";
     var CATEGORY_BLOG_USERNAME_SELECTOR = "#news_list > div > div > div.time > small.blue > a";
@@ -167,6 +168,11 @@
         RemoveByUsername(that, "li.clearit");
     };
 
+    var RemoveIndexFromSubjectIndexDetailPage = function() {
+        var that = $(this);
+        RemoveByUsername(that, "li.clearit");
+    };
+
     var RemoveBlogFromCategory = function() {
         var that = $(this);
         var isSuccess = RemoveByUsername(that, "div.item");
@@ -232,6 +238,7 @@
         $(SUBJECT_THREAD_USERNAME_SELECTOR).each(RemoveThreadFromSubject);
         $(SUBJECT_COLLECT_USERNAME_SELECTOR).each(RemoveDoingFromSubject);
         $(SUBJECT_INDEX_USERNAME_SELECTOR).each(RemoveIndexFromSubject);
+        $(SUBJECT_INDEX_DETAIL_PAGE_USERNAME_SELECTOR).each(RemoveIndexFromSubjectIndexDetailPage);
         $(SUBJECT_RATING_USERNAME_SELECTOR).each(RemoveRatingFromSubject);
         $(SUBJECT_COMMENT_DETAIL_PAGE_USERNAME_SELECTOR).each(RemoveCommetFromSubjectCommentDetailPage);
     }
