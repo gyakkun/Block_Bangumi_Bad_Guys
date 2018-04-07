@@ -1,4 +1,4 @@
-// ==UserScript==
+//// ==UserScript==
 // @name          Block Bad Guys on Bangumi.tv (Alpha)
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
@@ -14,7 +14,7 @@
 
 (function() {
     'use strict';
-
+    //Ready to merge.
     var url = window.location.pathname;
     var BLOCK_USERNAME_LIST = [];
     var BLOCK_UID_LIST = [];
