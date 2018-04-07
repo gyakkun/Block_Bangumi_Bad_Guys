@@ -3,7 +3,7 @@
 // @description   You can (not) see me (bgm38).
 // @copyright     gyakkun
 // @license       MIT
-// @version       0.1.0
+// @version       0.1.1
 // @include       http://bangumi.tv/*
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
@@ -95,7 +95,7 @@
             var userId = Number(userIdNotNumber);
             if ($.inArray(userId, BLOCK_UID_LIST) >= 0) {
                 obj.closest(selectorToRemove).hide();
-                console.warn(userId + " was removed by uid." +
+                console.warn(userId + " was removed by uid, " +
                     "called by function " + RemoveByUid.caller.name + ".");
                 return true;
             }
@@ -257,12 +257,48 @@
     }
 
     if (url.match(SETTINGS_URL) !== null) {
-        $("#columnA > form > span > table > tbody > tr:nth-last-child(2)").after('<tr><td valign="top" width="12%"><h2 class="subtitle">屏蔽列表</h2></td><td valign="top"></td></tr><tr><td valign="top" width="12%">注意</td><td valign="top">请填入需要屏蔽用户的用户名(username), 以逗号分隔, 如: laoism, acgism</br>用户名可以根据用户详情页url得到, 如https://bgm.tv/user/Example, 则该用户的的用户名为Example。</br>用户名也可在用户详情页头像旁的@xxxx处得到, xxxx即为用户名。</td></tr><tr style="display: none;"><td valign="top" width="12%">Block UID List</td><td valign="top"><input id="buidl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr><tr><td valign="top" width="12%">Block Username List</td><td valign="top"><input id="busrnl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;"></td></tr>');
+        /*jshint multistr: true */
+        $("#columnA > form > span > table > tbody > tr:nth-last-child(2)").after('\
+            <tr>\
+                <td valign="top" width="12%">\
+                    <h2 class="subtitle">屏蔽列表</h2>\
+                </td>\
+            <td valign="top"></td>\
+            </tr>\
+            <tr style="display: none;">\
+                <td valign="top" width="12%">Block UID List</td>\
+                <td valign="top">\
+                    <input id="buidl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;">\
+                </td>\
+            </tr>\
+            <tr>\
+                <td valign="top" width="12%">Block Username List</td>\
+                <td valign="top">\
+                    <input id="busrnl" name="Block UID List" class="inputtext" type="text" value="" style="width:380px;">\
+                </td>\
+            </tr>\
+            <tr>\
+                <td valign="top" width="12%">注意</td>\
+                <td valign="top">请填入需要屏蔽用户的用户名(username), 以英语逗号分隔, 如: laoism, acgism</br></br>\
+                    用户名可以根据用户详情页url得到, 如 https://bgm.tv/user/Example</br>\
+                    则该用户的的用户名为Example。</br>\
+                    用户名也可在用户详情页头像旁的@xxxx处得到, xxxx即为用户名。</br></br>\
+                    如需屏蔽首页右侧指定用户小组动态, 请继续填入该用户的UID</br></br>\
+                    UID可从用户头像得到, 如 https://lain.bgm.tv/pic/user/l/000/01/43/14382.jpg?r=1497204837</br>\
+                    则该用户UID为14382</br></br>\
+                    最终填入项可能是数字与username的混合, 如: laoism, acgism, 14382</td>\
+            </tr>\
+        ');
         $("#buidl").attr("value", BLOCK_UID_LIST);
         $("#busrnl").attr("value", BLOCK_USERNAME_LIST);
         $("input[type='submit']").click(function() {
             BLOCK_USERNAME_LIST = $("#busrnl").attr("value").replace(/\s+/g, "").split(",");
-            BLOCK_UID_LIST = JSON.parse('[' + String($("#buidl").attr("value").replace(/\s+/g, "").split(",")) + ']');
+            BLOCK_UID_LIST = [];
+            BLOCK_USERNAME_LIST.forEach(function(item, index, input) {
+                if (!isNaN(parseInt(item))) {
+                    BLOCK_UID_LIST.push(parseInt(item));
+                }
+            });
             //JS你是个⑨吗!!!
             localStorage["blockUsernameList"] = '["' + BLOCK_USERNAME_LIST.join('","') + '"]';
             localStorage["blockUidList"] = '[' + BLOCK_UID_LIST + ']';
