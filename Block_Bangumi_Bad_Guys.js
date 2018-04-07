@@ -23,7 +23,7 @@
     var TIMELINE_URL = /\/timeline/;
     var THREAD_URL = /\/(ep|blog|subject|group)/;
     var CATEGORY_URL = /\/(anime|book|music|real)/;
-    var SETTINGS_URL = /^\/settings\/$/;
+    var SETTINGS_URL = /^\/settings$/;
 
     try {
         if (!!localStorage["blockUsernameList"]) {
