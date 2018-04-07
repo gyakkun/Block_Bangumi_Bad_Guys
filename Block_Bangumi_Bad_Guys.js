@@ -8,7 +8,7 @@
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
 // @include       http://chii.in/*
-// @updateURL     http://127.0.0.1/Block_Bangumi_Bad_Guys.js
+// @updateURL     https://openuserjs.org/meta/gyakkun/Block_Bad_Guys_on_Bangumi.tv_(Alpha).meta.js
 // @grant none
 // ==/UserScript==
 
