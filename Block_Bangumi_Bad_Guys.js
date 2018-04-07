@@ -8,7 +8,7 @@
 // @include       http://bgm.tv/*
 // @include       https://bgm.tv/*
 // @include       http://chii.in/*
-// @updateURL     https://openuserjs.org/meta/gyakkun/Block_Bad_Guys_on_Bangumi.tv_(Alpha).meta.js
+// @updateURL     http://127.0.0.1/Block_Bangumi_Bad_Guys.js
 // @grant none
 // ==/UserScript==
 
@@ -23,7 +23,7 @@
     var TIMELINE_URL = /\/timeline/;
     var THREAD_URL = /\/(ep|blog|subject|group)/;
     var CATEGORY_URL = /\/(anime|book|music|real)/;
-    var SETTINGS_URL = /^\/settings$/;
+    var SETTINGS_URL = /^\/settings\/$/;
 
     try {
         if (!!localStorage["blockUsernameList"]) {
