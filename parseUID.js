@@ -1,21 +1,72 @@
-var getUIDfromUsername = function(username, ret) {
+var AVATAR_LARGE_UID_REG = /pic\/user\/l\/\d+\/\d+\/\d+\/(\d+)\.jpg/;
+
+var getUidFromEachUsername = function(username, blockUidList) {
+    blockUidList = [];
     var resultUID;
     var userDetailPageURL = '/user/' + username;
-    var AVATAR_UID_REG = /pic\/user\/l\/\d+\/\d+\/\d+\/(\d+)\.jpg/;
     var toReturn = "Nothing Now";
     $.get(userDetailPageURL, function returnUID(data) {
-        var uidWeGet = AVATAR_UID_REG.exec(data);
+        var uidWeGet = AVATAR_LARGE_UID_REG.exec(data);
         if (!!uidWeGet) {
-            //alert(uidWeGet[1]);
             toReturn = parseInt(uidWeGet[1]);
+            alert(toReturn + typeof(toReturn));
             console.log(toReturn, typeof(toReturn));
-            ret.UID = toReturn;
+            blockUidList.push(toReturn);
+            alert(blockUidList[blockUidList.length - 1]);
         } else {
-            //alert("Nothing Get!");
-            throw "Nothing Get!"
+            alert("Username " + username + " not found!");
+            console.error("Username " + username + " not found!");
         }
+        alert(blockUidList);
     });
+};
+
+$("input[type='submit']").click(function handleUsernameAndUid() {
+    //$("form[name='set']").submit(function() {
+    BLOCK_USERNAME_LIST = $("#busrnl").attr("value").replace(/\s+/g, "").split(",");
+    BLOCK_UID_LIST = [];
+
+    var BLOCK_USERNAME_LIST_COPY = BLOCK_USERNAME_LIST.slice(0);
+    var setUsernameAndUidCallBack = function() {
+        localStorage["blockUsernameList"] = '["' + BLOCK_USERNAME_LIST.join('","') + '"]';
+        localStorage["blockUidList"] = '[' + BLOCK_UID_LIST + ']';
+    }
+
+    BLOCK_USERNAME_LIST_COPY.forEach(function getUid(item, index, input, setUsernameAndUidCallBack) {
+        //var ret = {};
+        getUidFromEachUsername(item, BLOCK_UID_LIST);
+        setUsernameAndUidCallBack();
+        //BLOCK_UID_LIST.push(ret.UID);
+        //alert(BLOCK_UID_LIST);
+    });
+
+
+    /*     BLOCK_USERNAME_LIST.forEach(function(item, index, input) {
+    if (!isNaN(parseInt(item))) {
+        BLOCK_UID_LIST.push(parseInt(item));
+    }
+}); */
+
+    //JS你是个⑨吗!!!
+
+    //console.log(localStorage["blockUsernameList"], localStorage["blockUidList"]);
+    console.log("Block UID List Updated: " + localStorage["blockUidList"]);
+    console.log("Block Username List Updated: " + localStorage["blockUsernameList"]);
+});
+
+
+//arr to obj
+var arr = [];
+for (var index in obj) {
+    arr.push(obj[index]);
 }
+
+//obj to arr
+var obj = {};
+for (var index in arr) {
+    obj[index] = arr[index];
+}
+
 
 Array.prototype.unique = function() {
     var res = [];
@@ -28,20 +79,3 @@ Array.prototype.unique = function() {
     }
     return res;
 }
-
-
-$("input[type='submit']").click(function() {
-    BLOCK_USERNAME_LIST = $("#busrnl").attr("value").replace(/\s+/g, "").split(",");
-    BLOCK_UID_LIST = [];
-    BLOCK_USERNAME_LIST.forEach(function(item, index, input) {
-        if (!isNaN(parseInt(item))) {
-            BLOCK_UID_LIST.push(parseInt(item));
-        }
-    });
-    //JS你是个⑨吗!!!
-    localStorage["blockUsernameList"] = '["' + BLOCK_USERNAME_LIST.join('","') + '"]';
-    localStorage["blockUidList"] = '[' + BLOCK_UID_LIST + ']';
-    //console.log(localStorage["blockUsernameList"], localStorage["blockUidList"]);
-    console.log("Block UID List Updated: " + localStorage["blockUidList"]);
-    console.log("Block Username List Updated: " + localStorage["blockUsernameList"]);
-});

@@ -62,6 +62,7 @@
     //Regexes
     var USERNAME_REG = /user\/(.+)/;
     var AVATAR_UID_REG = /pic\/user\/.+\/\d+\/\d+\/\d+\/(\d+)\.jpg/;
+    var AVATAR_LARGE_UID_REG = /pic\/user\/l\/\d+\/\d+\/\d+\/(\d+)\.jpg/;
 
     var GetFuntionSelfName = function() {
         return arguments.callee.name;
