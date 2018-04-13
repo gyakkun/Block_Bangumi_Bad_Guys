@@ -22,7 +22,7 @@ var getUidFromEachUsername = function(username, blockUidList) {
 };
 
 $("input[type='submit']").click(function handleUsernameAndUid() {
-    //$("form[name='set']").submit(function() {
+
     BLOCK_USERNAME_LIST = $("#busrnl").attr("value").replace(/\s+/g, "").split(",");
     BLOCK_UID_LIST = [];
 
@@ -35,30 +35,19 @@ $("input[type='submit']").click(function handleUsernameAndUid() {
     var bulCtr = BLOCK_USERNAME_LIST_COPY.length;
 
     BLOCK_USERNAME_LIST_COPY.forEach(function getUid(item, index, input, setUsernameAndUidCallBack) {
-        //var ret = {};
         getUidFromEachUsername(item, BLOCK_UID_LIST);
         if (!bulCtr--) {
             setUsernameAndUidCallBack();
+            alert(BLOCK_UID_LIST);
             return;
         }
         //BLOCK_UID_LIST.push(ret.UID);
-        //alert(BLOCK_UID_LIST);
     });
 
 
-    /*     BLOCK_USERNAME_LIST.forEach(function(item, index, input) {
-    if (!isNaN(parseInt(item))) {
-        BLOCK_UID_LIST.push(parseInt(item));
-    }
-}); */
-
-    //JS你是个⑨吗!!!
-
-    //console.log(localStorage["blockUsernameList"], localStorage["blockUidList"]);
     console.log("Block UID List Updated: " + localStorage["blockUidList"]);
     console.log("Block Username List Updated: " + localStorage["blockUsernameList"]);
 });
-
 
 //arr to obj
 var arr = [];
@@ -71,7 +60,6 @@ var obj = {};
 for (var index in arr) {
     obj[index] = arr[index];
 }
-
 
 Array.prototype.unique = function() {
     var res = [];
