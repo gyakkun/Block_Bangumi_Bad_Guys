@@ -32,10 +32,15 @@ $("input[type='submit']").click(function handleUsernameAndUid() {
         localStorage["blockUidList"] = '[' + BLOCK_UID_LIST + ']';
     }
 
+    var bulCtr = BLOCK_USERNAME_LIST_COPY.length;
+
     BLOCK_USERNAME_LIST_COPY.forEach(function getUid(item, index, input, setUsernameAndUidCallBack) {
         //var ret = {};
         getUidFromEachUsername(item, BLOCK_UID_LIST);
-        setUsernameAndUidCallBack();
+        if (!bulCtr--) {
+            setUsernameAndUidCallBack();
+            return;
+        }
         //BLOCK_UID_LIST.push(ret.UID);
         //alert(BLOCK_UID_LIST);
     });
