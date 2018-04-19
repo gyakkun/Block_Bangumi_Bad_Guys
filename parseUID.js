@@ -1,3 +1,5 @@
+//comment for test.
+
 var AVATAR_LARGE_UID_REG = /pic\/user\/l\/\d+\/\d+\/\d+\/(\d+)\.jpg/;
 
 var getUidFromEachUsername = function(username, blockUidList) {
